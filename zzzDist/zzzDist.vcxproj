@@ -68,6 +68,9 @@
       <Command>copy "$(SolutionDir)README.md" "$(TargetDir)"
 copy "$(SolutionDir)simulrun\history.txt" "$(TargetDir)"
 
+mkdir "$(TargetDir)lang\"
+copy "$(SolutionDir)simulrun\jpn.txt" "$(TargetDir)lang"
+
 del "$(TargetDir)zzzDist.*"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -89,6 +92,9 @@ del "$(TargetDir)zzzDist.*"</Command>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)README.md" "$(TargetDir)"
 copy "$(SolutionDir)simulrun\history.txt" "$(TargetDir)"
+
+mkdir "$(TargetDir)lang\"
+copy "$(SolutionDir)simulrun\jpn.txt" "$(TargetDir)lang"
 
 del "$(TargetDir)zzzDist.*"</Command>
     </PostBuildEvent>

@@ -1,4 +1,6 @@
-﻿#include <iostream>
+﻿#include "stdafx.h"
+
+#include <iostream>
 #include <string>
 #include <Windows.h>
 #include <process.h>
@@ -10,6 +12,10 @@
 #include "../../lsMisc/CommandLineString.h"
 #include "../../lsMisc/OpenCommon.h"
 #include "../../lsMisc/stdosd/stdosd.h"
+
+#include "UserAppInfo.h"
+
+#define I18N(s) (s)
 
 using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
@@ -40,43 +46,10 @@ void ErrorExitWithLastError(
     wcerr << msg << endl;
     exit(dwLE);
 }
-class UsrAppInfo
-{
-    int nThread_ = 0;
-    HANDLE hEventToRun_;
-    std::wstring exe_;
-    std::wstring arg_;
-    std::wstring result_;
-public:
-    UsrAppInfo(HANDLE hEventToRun, const std::wstring& exe, const std::wstring& arg, int nThread):
-        hEventToRun_(hEventToRun), exe_(exe), arg_(arg), nThread_(nThread){}
 
-    HANDLE waitEvent() const {
-        return hEventToRun_;
-    }
-    std::wstring executable() const {
-        return exe_;
-    }
-    std::wstring arguments() const {
-        return arg_;
-    }
-    void SetThreadNumber(int v) {
-        nThread_ = v;
-    }
-    int threadNumber() const {
-        return nThread_;
-    }
-    void SetResult(const std::wstring& v) {
-        result_ = v;
-    }
-    std::wstring result() const {
-        return result_;
-    }
-};
-
-unsigned __stdcall start_address(void* pArg)
+unsigned __stdcall start_of_thread(void* pArg)
 {
-    UsrAppInfo* appInfo = (UsrAppInfo*)pArg;
+    UserAppInfo* appInfo = (UserAppInfo*)pArg;
 
     WaitForSingleObject(appInfo->waitEvent(), INFINITE);
 
@@ -97,31 +70,32 @@ unique_ptr<HANDLE> rawPointer(const vector<CHandle>& vc)
 
     return unique_ptr<HANDLE>(p);
 }
+
 int main()
 {
-    CCommandLineParser parser(L"Run executable simultaineously", APPNAME);
+    CCommandLineParser parser(I18N(L"Run executable simultaineously"), APPNAME);
 
     int nRunCount = 0;
     parser.AddOption(L"-n", 1, &nRunCount, ArgEncodingFlags_Default,
-        L"Specify count to run");
+        I18N(L"Specify count to run"));
 
     bool bCmdHelp = false;
     parser.AddOptionRange({ L"/?",L"-h",L"--help" },
         0,
         &bCmdHelp,
         ArgEncodingFlags_Default,
-        L"Shows help");
+        I18N(L"Shows help"));
 
     bool bCmdVersion = false;
     parser.AddOptionRange({ L"-v",L"--version" },
         0,
         & bCmdVersion,
         ArgEncodingFlags_Default,
-        L"Shows version");
+        I18N(L"Shows version"));
 
     wstring dummy;
     parser.AddOption(L"", 10, &dummy, ArgEncodingFlags_Default,
-        L"Command Line");
+        I18N(L"Command Line"));
 
     parser.Parse();
 
@@ -136,46 +110,44 @@ int main()
         return 0;
     }
     if (nRunCount <= 0)
-        ErrorExit(L"Run-count must be more than 1");
+        ErrorExit(I18N(L"Run-count must be more than 1"));
 
     CCommandLineString cmd;
     int nIndexN = cmd.getIndex(L"-n");
     if (nIndexN <= 0)
-        ErrorExit(L"-n must be specified");
+        ErrorExit(I18N(L"-n must be specified"));
     int nAppArgStartPos = nIndexN + 2;
     wstring usrApp = cmd.getArg(nAppArgStartPos);
     if (usrApp.empty())
-        ErrorExit(L"Executable not found");
+        ErrorExit(I18N(L"Executable not found"));
     wstring usrArg = cmd.subString(nAppArgStartPos + 1);
     
     ghEventWaitRun = CreateEvent(NULL, TRUE, FALSE, NULL);
     if (!ghEventWaitRun)
         ErrorExitWithLastError(L"CreateEvent");
 
-
-    vector<UsrAppInfo> vAppInfo;
+    vector<UserAppInfo> vAppInfo;
     vAppInfo.reserve(nRunCount);
     for (int i = 0; i < nRunCount; ++i)
     {
-        vAppInfo.emplace_back(UsrAppInfo(ghEventWaitRun, usrApp, usrArg, i));
+        vAppInfo.emplace_back(UserAppInfo(ghEventWaitRun, usrApp, usrArg, i));
     }
     
     vector<CHandle> threads;
     threads.reserve(nRunCount);
-
     for (int i = 0; i < nRunCount; ++i)
     {
         unsigned dwThreadId = 0;
         CHandle t ((HANDLE)_beginthreadex(
             NULL,       // security
             0,          // stacksize
-            start_address,
+            start_of_thread,
             &vAppInfo[i],       // arg
             0,          // flags
             &dwThreadId       // thread id
         ));
         if (!t || dwThreadId == 0)
-            ErrorExitWithLastError(L"Failed to create a thread");
+            ErrorExitWithLastError(I18N(L"Failed to create a thread"));
 
         threads.emplace_back(move(t));
     }

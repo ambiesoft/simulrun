@@ -13,8 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="4 Dists">
+    <Filter Include="5 Dists">
       <UniqueIdentifier>{ced7d870-19ad-44b1-a5f6-bd735594627b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4 lang">
+      <UniqueIdentifier>{60351ac7-de4f-4aae-829b-c58a7c65871c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,10 +77,16 @@
     <ClInclude Include="..\..\lsMisc\stdosd\stdosd_literal.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UserAppInfo.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="history.txt">
-      <Filter>4 Dists</Filter>
+      <Filter>5 Dists</Filter>
+    </Text>
+    <Text Include="jpn.txt">
+      <Filter>4 lang</Filter>
     </Text>
   </ItemGroup>
 </Project>

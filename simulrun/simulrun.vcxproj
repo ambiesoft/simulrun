@@ -104,9 +104,11 @@
     <ClInclude Include="..\..\lsMisc\UrlEncode.h" />
     <ClInclude Include="..\..\lsMisc\UTF16toUTF8.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UserAppInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="history.txt" />
+    <Text Include="jpn.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
