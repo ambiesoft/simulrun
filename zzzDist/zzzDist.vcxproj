@@ -13,8 +13,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{212d6640-6598-4a1d-bbb0-5facd310a803}</ProjectGuid>
-    <RootNamespace>simulrun</RootNamespace>
+    <ProjectGuid>{dd5891dc-e901-4b7d-86b6-03facc06b6df}</ProjectGuid>
+    <RootNamespace>zzzDist</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -45,12 +45,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\$(ProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\simulrun\</OutDir>
     <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\$(ProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformToolset)\simulrun\</OutDir>
     <IntDir>$(Configuration)\$(PlatformToolset)\$(PlatformName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -59,12 +59,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)README.md" "$(TargetDir)"
+copy "$(SolutionDir)simulrun\history.txt" "$(TargetDir)"
+
+del "$(TargetDir)zzzDist.*"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -74,7 +79,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,31 +86,15 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)README.md" "$(TargetDir)"
+copy "$(SolutionDir)simulrun\history.txt" "$(TargetDir)"
+
+del "$(TargetDir)zzzDist.*"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\lsMisc\CommandLineParser.cpp" />
-    <ClCompile Include="..\..\lsMisc\GetLastErrorString.cpp" />
-    <ClCompile Include="..\..\lsMisc\OpenCommon.cpp" />
-    <ClCompile Include="..\..\lsMisc\stdosd\stdosd.cpp" />
-    <ClCompile Include="..\..\lsMisc\stdosd\stdosd_win.cpp" />
-    <ClCompile Include="..\..\lsMisc\UrlEncode.cpp" />
-    <ClCompile Include="..\..\lsMisc\UTF16toUTF8.cpp" />
-    <ClCompile Include="simulrun.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\lsMisc\CHandle.h" />
-    <ClInclude Include="..\..\lsMisc\CommandLineParser.h" />
-    <ClInclude Include="..\..\lsMisc\CommandLineString.h" />
-    <ClInclude Include="..\..\lsMisc\GetLastErrorString.h" />
-    <ClInclude Include="..\..\lsMisc\OpenCommon.h" />
-    <ClInclude Include="..\..\lsMisc\stdosd\stdosd.h" />
-    <ClInclude Include="..\..\lsMisc\stdosd\stdosd_literal.h" />
-    <ClInclude Include="..\..\lsMisc\UrlEncode.h" />
-    <ClInclude Include="..\..\lsMisc\UTF16toUTF8.h" />
-    <ClInclude Include="stdafx.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="history.txt" />
+    <ClCompile Include="zzzDist.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,7 +18,7 @@ using namespace std;
 CHandle ghEventWaitRun;
 constexpr wchar_t NEWLINE[] = L"\r\n";
 constexpr wchar_t APPNAME[] = L"simulrun";
-constexpr wchar_t APPVERSION[] = L"1.0.1";
+constexpr wchar_t APPVERSION[] = L"1.0.2";
 
 void ErrorExit(const wstring& str)
 {

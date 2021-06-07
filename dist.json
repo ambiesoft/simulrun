@@ -1,0 +1,27 @@
+{
+    "name": "simulrun",
+    "solution": "simulrun.sln",
+    "targetproject": "zzzDist",
+    "configuration": "Release",
+    "targets": [
+        {
+            "setoutdirforbuild": false,
+            "outdir": "Release\\v142\\simulrun\\",
+            "platform": "x86"
+        }
+    ],
+    "ShouldBeFiles": [
+        "history.txt",
+        "README.md",
+        "simulrun.exe",
+        "simulrun.pdb"
+    ],
+    "TotalFileCount": 4,
+    "archivedir": "C:\\Linkout\\",
+    "remotedir": "http://ambiesoft.mooo.com/ffdav/uploads/simulrun/",
+    "remotesha1": "http://ambiesoft.mooo.com/ffdav/uploads/getSha1.php?file=simulrun/{}",
+    "ShouldNotBeFiles": [],
+    "ShouldBeOneOfThem": [],
+    "obtainverfrom": "history.txt",
+    "obtainverregex": "\\d+\\.\\d+\\.\\d+"
+}
